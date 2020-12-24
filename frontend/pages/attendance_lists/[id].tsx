@@ -81,12 +81,12 @@ export default function AttendanceList({ attendance_list }: Props) {
                     marginTop={1}>
                 <AlertIcon />
                 {text}
-                <CloseButton position="absolute" 
+                {/* <CloseButton position="absolute" 
                             right="8px" 
                             top="8px" 
                             onClick={
                                 () => setStatus(statusInicialValue)
-                            } />
+                            } /> */}
             </Alert>
         )
     }
@@ -140,7 +140,7 @@ export default function AttendanceList({ attendance_list }: Props) {
 }
 
 const present = async (value, attendance_list_id) => {
-    const response = await fetch(`http://localhost:3333/key`, {
+    const response = await fetch(`http://localhost:3333/key/present`, {
         method: 'PATCH',
         body: JSON.stringify({
             attendance_list_id: attendance_list_id,

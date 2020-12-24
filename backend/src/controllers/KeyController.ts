@@ -97,6 +97,84 @@ export default {
         return response.status(200).json(keyView.render(key));
     },
 
+    async removeById(request: Request, response: Response) {
+        const { 
+            id,
+        } = request.params;
+
+        interface Data {
+            id: number,
+        }
+
+        const data: Data = {
+            id: parseInt(id),
+        };
+
+        const schema = Yup.object().shape({
+            id: Yup.number().required(),
+        });
+
+        await schema.validate(data, {
+            abortEarly: false,
+        });
+
+        const key_repository = getRepository(Key);
+
+        const key = await key_repository.findOneOrFail(id, { relations: ['attendance_list'] });
+
+        await key_repository.remove(key);
+
+        return response.status(200).json(keyView.render(key));
+    },
+
+    async update(request: Request, response: Response) {
+        const { id } = request.params
+        const { value, present } = request.body;
+
+        interface Data {
+            id: number,
+            value: string,
+            present: boolean,
+        }
+
+        const data: Data = {
+            id: parseInt(id),
+            value: value,
+            present: present,
+        };
+
+        const schema = Yup.object().shape({
+            id: Yup.number(),
+            value: Yup.string().notOneOf([""]),
+            present: Yup.boolean(),
+        });
+
+        await schema.validate(data, {
+            abortEarly: false,
+        });
+
+        function copyToUpdate(obj: any) {
+            let objCopy = {} as any
+            let key
+            for (key in obj) {
+                if (key !== 'id' && obj[key] !== undefined) {
+                    objCopy[key] = obj[key]
+                }
+            }
+            return objCopy
+        }
+
+        const dataToUpdate = copyToUpdate(data)
+
+        const key_repository = getRepository(Key);
+
+        await key_repository.update(id, dataToUpdate)
+
+        let key = await key_repository.findOneOrFail(id, { relations: ['attendance_list'] });
+
+        return response.status(200).json(keyView.render(key));
+    },
+
     async present(request: Request, response: Response) {
         const { 
             attendance_list_id,

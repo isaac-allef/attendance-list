@@ -34,106 +34,57 @@ export default {
         return response.status(200).json(attendanceListView.render(attendance_list));
     },
 
-    async closed(request: Request, response: Response) {
+    async update(request: Request, response: Response) {
         const { id } = request.params;
-        const { closed } = request.body;
+        const { title, note, closed } = request.body;
 
         interface Data {
             id: string,
-            closed: boolean,
+            title?: string,
+            note?: string,
+            closed?: boolean,
         }
 
         const data: Data = {
             id: id,
+            title: title,
+            note: note,
             closed: closed
         };
 
         const schema = Yup.object().shape({
             id: Yup.string().required(),
-            closed: Yup.boolean().required()
+            title: Yup.string(),
+            note: Yup.string(),
+            closed: Yup.boolean(),
         });
 
         await schema.validate(data, {
             abortEarly: false,
         });
+
+        function copyToUpdate(obj: any) {
+            let objCopy = {} as any
+            let key
+            for (key in obj) {
+                if (key !== 'id' && obj[key] !== undefined) {
+                    objCopy[key] = obj[key]
+                }
+            }
+            return objCopy
+        }
+
+        const dataToUpdate = copyToUpdate(data)
         
         const attendance_list_repository = getRepository(AttendanceList);
 
-        await attendance_list_repository.update(data.id, { closed: data.closed });
+        await attendance_list_repository.update(data.id, dataToUpdate);
     
         const attendance_list = await attendance_list_repository.findOneOrFail(id, {
             relations: ['keys']
         });
 
         return response.status(200).json(attendanceListView.render(attendance_list));
-    },
-
-    async update(request: Request, response: Response) {
-        const { id } = request.params;
-        const {
-            title,
-            note,
-            keys,
-        } = request.body;
-
-        interface Key {
-            value: string,
-            present?: boolean,
-        }
-
-        interface Data {
-            id: string,
-            title: string,
-            note: string,
-            keys: Key[]
-        }
-
-        const data: Data = {
-            id,
-            title,
-            note,
-            keys,
-        };
-
-        const schema = Yup.object().shape({
-            id: Yup.string().required(),
-            title: Yup.string().required(),
-            note: Yup.string(),
-            keys: Yup.array(
-                Yup.object().shape({
-                    value: Yup.string().required(),
-                    present: Yup.boolean(),
-                })
-            )
-        });
-
-        await schema.validate(data, {
-            abortEarly: false,
-        });
-
-        await getConnection().transaction(async transactionalEntityManager => {
-
-            const attendance_list_repository = getRepository(AttendanceList);
-
-            // await attendance_list_repository.update(data.id, { title, note });
-
-            const key_repository = getRepository(Key);
-            const keysToRemove = await key_repository.find({
-                where: [
-                    {attendance_list: data.id}
-                ]
-            })
-            key_repository.remove(keysToRemove)
-
-            await attendance_list_repository.save(data);
-            
-            const attendance_list = await attendance_list_repository.findOneOrFail(id, {
-                relations: ['keys']
-            });
-        
-            return response.status(201).json(attendanceListView.render(attendance_list));
-
-        });
     },
 
     async create(request: Request, response: Response) {
