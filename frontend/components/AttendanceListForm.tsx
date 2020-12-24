@@ -77,8 +77,10 @@ export default function AttendanceListForm({ attendance_list }: Props) {
 
       setSaving(true)
       if (timeoutTitle) clearTimeout(timeoutTitle);
-      timeoutTitle = setTimeout(() => updateAttendanceList({ title }, id), 1000);
-      setSaving(false)
+      timeoutTitle = setTimeout(async () => {
+        updateAttendanceList({ title }, id)
+        setSaving(false)
+      }, 1000);
     }
 
     function validateNote(note) {
@@ -95,8 +97,10 @@ export default function AttendanceListForm({ attendance_list }: Props) {
 
       setSaving(true)
       if (timeoutNote) clearTimeout(timeoutNote);
-      timeoutNote = setTimeout(() => updateAttendanceList({ note }, id), 1000);
-      setSaving(false)
+      timeoutNote = setTimeout(async () => {
+        await updateAttendanceList({ note }, id)
+        setSaving(false)
+      }, 1000);
     }
 
     async function addKey(attendance_list_id: string, value: string) {
