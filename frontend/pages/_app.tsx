@@ -4,7 +4,7 @@ import { extendTheme } from "@chakra-ui/react"
 import Header from "../components/Header"
 
 import NProgress from 'nprogress'
-import { Router } from "next/router"
+import { Router, useRouter } from "next/router"
 
 Router.events.on("routeChangeStart", (url) => NProgress.start())
 Router.events.on("routeChangeComplete", () => NProgress.done())
@@ -43,10 +43,12 @@ const colors = {
 const theme = extendTheme({ colors, radii, fontWeights, fonts })
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
+  const showHeader = router.pathname === '/attendance_lists/[id]' ? false : true
   return (
     <ChakraProvider theme={theme}>
       <link rel="stylesheet" type="text/css" href="/nprogress.css" />
-      <Header />
+      {showHeader && <Header />}
       <Component {...pageProps} />
     </ChakraProvider>
   )
