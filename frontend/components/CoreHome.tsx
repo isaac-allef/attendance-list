@@ -27,7 +27,7 @@ export default function CoreHome(props) {
             alignItems="stretch"
             justifyContent="center"
             height="280px"
-            width="280px"
+            width="380px"
             borderRadius="md"
             padding={16}
             border="1px"
@@ -43,7 +43,7 @@ export default function CoreHome(props) {
             alignItems="stretch"
             justifyContent="center"
             height="280px"
-            width="280px"
+            width="380px"
             borderRadius="md"
             padding={16}
             margin={5}

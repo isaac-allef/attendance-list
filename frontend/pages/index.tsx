@@ -1,9 +1,10 @@
-import { Box, Button, Flex, FormControl, FormErrorMessage, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormErrorMessage, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from 'next/router'
 import CoreHome from "../components/CoreHome";
 import * as Yup from 'yup';
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
+import { Text } from "@chakra-ui/react"
 
 
 export default function Home() {
@@ -53,11 +54,16 @@ export default function Home() {
   return (<>
     <CoreHome>
 
-      <Flex justifyContent="center" direction="column" alignItems="center">
-        <AddIcon />
+      <Flex justifyContent="center" direction="column" alignItems="stretch">
+        {/* <AddIcon /> */}
         <Button
+          size="lg"
           onClick={createAttendanceList}
-        >{'< Create />'}</Button>
+          >{'< Create />'}</Button>
+        <Text marginTop={3}
+              color="gray.500" 
+              align="center"
+        >Create a new Attendance List that can accept responses only from Keys chosen by you.</Text>
       </Flex>
       
       <Formik initialValues={initialValues}
@@ -68,13 +74,15 @@ export default function Home() {
 
           <Form>
 
-            <EditIcon />
-            
             <Field name="code">
               {({ field, form }) => (
 
                 <FormControl isInvalid={form.errors.code && form.touched.code}>
-                  <Input {...field} mt={3} id="code" placeholder="Code" />
+                  <InputGroup size="lg">
+                  <InputLeftElement pointerEvents="none"
+                                    children={<EditIcon />} />
+                  <Input {...field}  id="code" placeholder="Code" />
+                  </InputGroup>
                   <FormErrorMessage>{form.errors.code}</FormErrorMessage>
                 </FormControl>
               
@@ -82,8 +90,16 @@ export default function Home() {
             </Field>
 
             <Button
+              marginTop={3}
+              size="lg"
+              isFullWidth
               type="submit"
             >{'< Edit />'}</Button>
+            
+            <Text marginTop={3}
+                  color="gray.500" 
+                  align="center"
+                  >Insert a Attendance List Code to edit it</Text>
           </Form>
 
         )}
