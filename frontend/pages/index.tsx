@@ -57,6 +57,9 @@ export default function Home() {
       <Flex justifyContent="center" direction="column" alignItems="stretch">
         {/* <AddIcon /> */}
         <Button
+          bgColor="blue.500"
+          textColor="white"
+          _hover={{bg: "blue.300"}}
           size="lg"
           onClick={createAttendanceList}
           >{'< Create />'}</Button>
@@ -81,7 +84,7 @@ export default function Home() {
                   <InputGroup size="lg">
                   <InputLeftElement pointerEvents="none"
                                     children={<EditIcon />} />
-                  <Input {...field}  id="code" placeholder="Code" />
+                  <Input {...field} borderColor="gray.400" id="code" placeholder="Code" />
                   </InputGroup>
                   <FormErrorMessage>{form.errors.code}</FormErrorMessage>
                 </FormControl>
@@ -90,6 +93,9 @@ export default function Home() {
             </Field>
 
             <Button
+              bgColor="blue.500"
+              textColor="white"
+              _hover={{bg: "blue.300"}}
               marginTop={3}
               size="lg"
               isFullWidth

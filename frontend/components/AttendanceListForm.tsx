@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Alert, AlertIcon, Box, Button, CloseButton, FormControl, FormErrorMessage, Input, /*Link*/ } from "@chakra-ui/react";
+import { Alert, AlertIcon, Box, Button, CloseButton, FormControl, FormErrorMessage, Input, Divider, /*Link*/ } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik, useFormik, useFormikContext, validateYupSchema } from "formik";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
@@ -205,6 +205,9 @@ export default function AttendanceListForm({ attendance_list }: Props) {
                   <Box mt={3} borderWidth="1px" borderRadius="lg" maxW="sm">
 
                     <Button
+                      bgColor="blue.400"
+                      textColor="white"
+                      _hover={{bg: "blue.300"}}
                       width="sm"
                       borderRadius="zero"
                       borderTopRadius="lg"
@@ -259,6 +262,7 @@ export default function AttendanceListForm({ attendance_list }: Props) {
                 justifyContent="center"
                 padding={2}
               >
+                <Divider padding={4} marginBottom={2} width="90%"/>
                 <Link href={`http://localhost:3000/attendance_lists/${id}`}>
                     <a target="_blank">Attendance List <ExternalLinkIcon /></a>
                 </Link>
