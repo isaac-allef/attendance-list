@@ -21,7 +21,7 @@ export default function Header(props) {
             paddingRight={150}
         >
             <Link href="/"><a><Heading as="h3" size="md"> <MoonIcon /> Attendance List</Heading></a></Link>
-            <Link href="https://www.google.com/"><a target="_blank">
+            <Link href="https://github.com/isaac-allef/attendance-list"><a target="_blank">
                 <Image
                     src="/github-icon.svg"
                     alt="Github icon"

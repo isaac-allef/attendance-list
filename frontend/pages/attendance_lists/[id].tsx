@@ -1,11 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { Button, Flex, Grid, Heading, Input, Text, InputGroup, InputLeftElement, InputRightElement, TagLabel, Link, Divider, Alert, AlertIcon, CloseButton } from "@chakra-ui/react"
+import { Button, Flex, Grid, Heading, Input, Text, InputGroup, InputLeftElement, InputRightElement, TagLabel, /*Link,*/ Divider, Alert, AlertIcon, CloseButton, Box } from "@chakra-ui/react"
 import { CheckIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { Spinner } from "@chakra-ui/react"
 import Core from '../../components/Core';
+
+import Link from 'next/link'
 
 interface Key {
     id: number,
@@ -126,15 +128,17 @@ export default function AttendanceList({ attendance_list }: Props) {
             </Button>
             </form>
             <Divider padding={5} width="90%"/>
-            <Link
+            <Box
                 color="blue.400"
                 _hover={ { color: 'blue.300' } }
                 alignItems="center"
                 justifyContent="center"
                 padding={2}
             >
-                Gitub <ExternalLinkIcon />
-            </Link>
+                <Link href="https://github.com/isaac-allef/attendance-list">
+                    <a target="_blank">Gitub <ExternalLinkIcon /></a>
+                </Link>
+            </Box>
         </Core>
     )
 }
