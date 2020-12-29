@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Alert, AlertIcon, Box, Button, CloseButton, FormControl, FormErrorMessage, Input, Divider, /*Link*/ } from "@chakra-ui/react";
+import { Text, Alert, AlertIcon, Box, Button, CloseButton, FormControl, FormErrorMessage, Input, Divider, Switch, Flex, /*Link*/ } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik, useFormik, useFormikContext, validateYupSchema } from "formik";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
@@ -29,9 +29,10 @@ export default function AttendanceListForm({ attendance_list }: Props) {
 
   const [saving, setSaving] = useState(false)
   const [valuesForm, setValuesForm] = useState({})
-
-    const { id, title, note, keys } = attendance_list;
-
+  
+  const { id, title, note, keys, closed } = attendance_list;
+  
+  const [isClosed, setIsClosed] = useState(closed)
 
     // const formSchema = Yup.object().shape({
     //     title: Yup.string()
@@ -61,6 +62,16 @@ export default function AttendanceListForm({ attendance_list }: Props) {
           }
       });
       return await response.json();
+    }
+
+    async function saveClosed(closed, id) {
+      try {
+        const response = await updateAttendanceList({closed}, id)
+        return response.closed
+      } catch(err) {
+        console.log(err)
+      }
+
     }
 
     function validateTitle(title) {
@@ -255,18 +266,26 @@ export default function AttendanceListForm({ attendance_list }: Props) {
                 )}
               </FieldArray>
 
-              <Box
+              <Divider padding={4} marginBottom={2} width="93%"/>
+              <Flex
                 color="blue.400"
                 _hover={ { color: 'blue.300' } }
                 alignItems="center"
-                justifyContent="center"
+                justifyContent="space-between"
+                // bgColor="black"
                 padding={2}
               >
-                <Divider padding={4} marginBottom={2} width="90%"/>
                 <Link href={`http://localhost:3000/attendance_lists/${id}`}>
                     <a target="_blank">Attendance List <ExternalLinkIcon /></a>
                 </Link>
-              </Box>
+                <Box color="#121214" display="flex" alignItems="center">
+                  <Text paddingRight={2}>Close?</Text>
+                  <Switch colorScheme="blue" size="lg"
+                          isChecked={isClosed}
+                          onChange={async () => saveClosed(!isClosed, id).then( value => setIsClosed(value) ) }
+                  ></Switch>
+                </Box>
+              </Flex>
               
             </Form>
           )}
