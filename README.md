@@ -13,7 +13,9 @@
   <a href="#memo-license">License</a>
 </p>
 
+### Create attendance list
 ![Create attendance list gif](https://github.com/isaac-allef/attendance-list/blob/main/public/create-attendance-list.gif)
+### Response attendance list
 ![Response attendance list gif](https://github.com/isaac-allef/attendance-list/blob/main/public/response-attendance-list.gif)
 
 ## :rocket: Technologies
