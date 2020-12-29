@@ -43,11 +43,15 @@ $ git clone https://github.com/isaac-allef/attendance-list.git
 # Go into the repository
 $ cd attendance-list
 
-# Install dependencies
+# Install backend dependencies and run it
+$ cd backend
 $ yarn install
+$ yarn dev
 
-# Run the app
-$ yarn start
+# Install frontend dependencies and run it
+$ cd frontend
+$ yarn install
+$ yarn dev or yarn build && yarn start
 ```
 
 ## :memo: License
