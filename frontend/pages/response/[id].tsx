@@ -30,8 +30,23 @@ interface Props {
     attendance_list: Attendance_list
 }
 
-export default function AttendanceList({ attendance_list }: Props) {
+import useSWR from "swr";
+
+const fetcher = url => fetch(url).then(res => {
+    if (res.status === 500) {
+        throw new Error('API Client Error');
+    }
+    return res.json()
+});
+
+export default function AttendanceList() {
+    const { query } = useRouter()
     
+    const { data, error } = useSWR(`http://localhost:3333/attendance_list/${query.id}`, fetcher)
+    if (error) return <Core>Failed to load</Core>
+    if (!data) return <Core><Spinner size="xl"/></Core>
+    const attendance_list = data
+
     const { id, title, note } = attendance_list;
 
     return (
@@ -54,9 +69,9 @@ export default function AttendanceList({ attendance_list }: Props) {
                     </Thead>
                     <Tbody>
                         {
-                            React.Children.toArray(
-                                attendance_list.keys.map( key => (
-                                    <Tr>
+                            // React.Children.toArray(
+                                attendance_list?.keys?.map( key => (
+                                    <Tr key={key.value}>
                                         <Td paddingLeft={1} textAlign="start" paddingRight={10} border="1px" borderColor="gray.400">{key.value}</Td>
                                         {
                                             key.present ? 
@@ -74,7 +89,7 @@ export default function AttendanceList({ attendance_list }: Props) {
                                         }
                                     </Tr>
                                 ))
-                            )
+                            // )
                         }
                     </Tbody>
                 </Table>
@@ -95,22 +110,3 @@ export default function AttendanceList({ attendance_list }: Props) {
         </Core>
     )
 }
-
-export const getServerSideProps:GetServerSideProps = async (context) => {
-    const { id } = context.query;
-    
-    const response = await fetch(`http://localhost:3333/attendance_list/${id}`);
-    const data = await response.json();
-    
-    if (data.message) {
-      return {
-        notFound: true,
-      }
-    }
-  
-    return { 
-        props: {
-            attendance_list: data as Attendance_list,
-        }
-    }
-  }
