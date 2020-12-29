@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Button, Flex, Grid, Heading, Input, Text, InputGroup, InputLeftElement, InputRightElement, TagLabel, /*Link,*/ Divider, Alert, AlertIcon, CloseButton, Box } from "@chakra-ui/react"
 import { CheckIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Spinner } from "@chakra-ui/react"
 import Core from '../../components/Core';
 
@@ -33,12 +33,17 @@ export default function AttendanceList({ attendance_list }: Props) {
     const [keyIsInvalid, setKeyIsInvalid] = useState(false)
     const statusInicialValue = <div></div>;
     const [status, setStatus] = useState(statusInicialValue)
+    const [isDisabled, setIsDisabled] = useState(false)
     
     if (isFallback) {
         return <Core><Spinner size="xl"/></Core>;
     }
     
     const { id, title, note } = attendance_list;
+
+    function checkIfAttendanceListIsClosed() {
+        return attendance_list.closed
+    }
 
     function checkIfKeyIsInvalid(value) {
         const { keys } = attendance_list;
@@ -66,7 +71,12 @@ export default function AttendanceList({ attendance_list }: Props) {
         if (!checkIfKeyIsInvalid(keyValue)) {
             try {
                 const result = await present(keyValue, id)
-                setStatus(alertStatus('success', 'Present'))
+                if (result.message === "This attendance list is closed") {
+                    setIsDisabled(true)
+                    setStatus(alertStatus('error', 'This attendance list is closed'))
+                } else {
+                    setStatus(alertStatus('success', 'Present'))
+                }
             }catch(err) {
                 setStatus(alertStatus('error', 'Fail'))
             }
@@ -107,6 +117,7 @@ export default function AttendanceList({ attendance_list }: Props) {
                 // background="gray.800"
                 focusBorderColor="blue.400"
                 borderRadius="sm"
+                isDisabled={checkIfAttendanceListIsClosed() || isDisabled}
 
                 value={keyValue}
 
@@ -115,7 +126,7 @@ export default function AttendanceList({ attendance_list }: Props) {
                 errorBorderColor="red.300"
                 placeholder="Key"
                 autoFocus={true} />
-            {status}
+            { checkIfAttendanceListIsClosed() ? alertStatus('error', 'This attendance list is closed') : status}
             <Button
                 marginTop={6}
                 // backgroundColor="yellow.700"
