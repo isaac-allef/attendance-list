@@ -210,6 +210,10 @@ export default {
              relations: ['keys']
         });
 
+        if (attendance_list.closed) {
+            return response.status(401).json({message: "This attendance list is closed"})
+        }
+
         const key_repository = getRepository(Key);
 
         let key = await key_repository.findOneOrFail({
