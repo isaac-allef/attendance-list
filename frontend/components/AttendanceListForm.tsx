@@ -1,4 +1,4 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon, ViewIcon } from "@chakra-ui/icons";
 import { Text, Alert, AlertIcon, Box, Button, CloseButton, FormControl, FormErrorMessage, Input, Divider, Switch, Flex, /*Link*/ } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik, useFormik, useFormikContext, validateYupSchema } from "formik";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -277,6 +277,9 @@ export default function AttendanceListForm({ attendance_list }: Props) {
               >
                 <Link href={`http://localhost:3000/attendance_lists/${id}`}>
                     <a target="_blank">Attendance List <ExternalLinkIcon /></a>
+                </Link>
+                <Link href={`http://localhost:3000/response/${id}`}>
+                    <a >Responses <ViewIcon /></a>
                 </Link>
                 <Box color="#121214" display="flex" alignItems="center">
                   <Text paddingRight={2}>Close?</Text>
