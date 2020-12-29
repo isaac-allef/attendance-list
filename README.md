@@ -13,7 +13,8 @@
   <a href="#memo-license">License</a>
 </p>
 
-![App Screenshot]()
+![Create attendance list gif](https://github.com/isaac-allef/attendance-list/blob/main/public/create-attendance-list.gif)
+![Response attendance list gif](https://github.com/isaac-allef/attendance-list/blob/main/public/response-attendance-list.gif)
 
 ## :rocket: Technologies
 
