@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
@@ -23,14 +24,28 @@
 This project was developed with the following technologies:
 
 -  [ReactJS](https://reactjs.org/)
--  [NextJS]()
--  [Chakra UI]()
--  [Formik]()
--  [NodeJS]()
--  [Typescript]()
--  [Typeorm]()
--  [SQLite]()
+-  [NextJS](https://nextjs.org/)
+-  [Chakra UI](https://chakra-ui.com/)
+-  [Formik](https://formik.org/)
+-  [NodeJS](https://nodejs.org/en/)
+-  [Typescript](https://www.typescriptlang.org/)
+-  [Typeorm](https://typeorm.io/#/)
+-  [SQLite](https://www.sqlite.org/index.html)
 -  [VS Code][vc]
+
+## 📋 Features
+
+### Documentation
+
+- [x] Create Attendance Lists that can accept responses only from Keys previously chosen
+- [x] Edit the Attendance Lists and your Keys
+- [x] See responses in real time (actually in click time)
+- [x] Close and open a Attendance List to recive responses
+- [x] API to communication with other systems (backend folder)
+- [ ] Option of several Keys representing a single student
+- [ ] Upload Keys lists (.csv)
+- [ ] Schedule opening and closing Attendance List
+- [ ] Send responses to email
 
 ## :information_source: How To Use
 
