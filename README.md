@@ -70,7 +70,7 @@ $ yarn dev or yarn build && yarn start
 ```
 
 ## :memo: License
-This project is under the MIT license. See the [LICENSE](https://github.com/...) for more information.
+This project is under the MIT license. See the [LICENSE](LICENSE) for more information.
 
 ---
 
