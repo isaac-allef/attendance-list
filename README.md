@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="https://github.com/isaac-allef/attendance-list/blob/main/public/banner.png" width="800"/>
+</p>
+
 <h1 align="center">
     Attendance List
 </h1>
